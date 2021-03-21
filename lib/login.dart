@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: ModalProgressHUD(
-          inAsyncCall:showProgress ,
+          inAsyncCall: showProgress,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -86,7 +86,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 45.0,
                   child: Text(
                     "Register",
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0),
+                    style:
+                        TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0),
                   ),
                 ),
               )

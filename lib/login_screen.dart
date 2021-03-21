@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/homePage/homepage.dart';
 import 'package:flutter_app/main.dart';
+import 'package:flutter_app/services/auth.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'main.dart';
-
 
 const users = const {
   'dribbble@gmail.com': '12345',
@@ -15,14 +16,21 @@ class LoginScreen extends StatelessWidget {
     return FlutterLogin(
       title: 'BOOK',
       logo: 'assets/python.png',
-      onLogin: (_) => Future(null),
-      onSignup: (_) => Future(null),
+      onLogin: (data) {
+        return Auth().signIn(data.name, data.password);
+      },
+      onSignup: (data) {
+        return Auth().signUp(data.name, data.password);
+      },
       onSubmitAnimationCompleted: () {
+        print("check");
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => MyApp(),
+          builder: (context) => HomePage(),
         ));
       },
-      onRecoverPassword: (_) => Future(null),
+      onRecoverPassword: (data) {
+        return Auth().sendOtp(data);
+      },
       theme: LoginTheme(
         primaryColor: Colors.lightBlueAccent,
         accentColor: Colors.pinkAccent,
@@ -95,7 +103,6 @@ class LoginScreen extends StatelessWidget {
           // shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(55.0)),
         ),
       ),
-
     );
   }
 }
