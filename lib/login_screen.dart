@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/homePage/homepage.dart';
 import 'package:flutter_app/main.dart';
+import 'package:flutter_app/homePage/homepage.dart';
 import 'package:flutter_app/services/auth.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'main.dart';
 
 const users = const {
   'dribbble@gmail.com': '12345',
@@ -14,26 +13,32 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
-      title: 'BOOK',
-      logo: 'assets/python.png',
+      title: 'BOOK BANk',
+      logo: 'assets/logo.png',
       onLogin: (data) {
         return Auth().signIn(data.name, data.password);
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => DrawerExample(),
+        ));
       },
       onSignup: (data) {
         return Auth().signUp(data.name, data.password);
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => DrawerExample(),
+        ));
       },
       onSubmitAnimationCompleted: () {
         print("check");
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) => DrawerExample(),
         ));
       },
       onRecoverPassword: (data) {
         return Auth().sendOtp(data);
       },
       theme: LoginTheme(
-        primaryColor: Colors.lightBlueAccent,
-        accentColor: Colors.pinkAccent,
+        primaryColor: Colors.red.shade50,
+        accentColor: Colors.grey.shade800,
         errorColor: Colors.red,
         titleStyle: TextStyle(
           color: Colors.black,
@@ -45,15 +50,15 @@ class LoginScreen extends StatelessWidget {
           decoration: TextDecoration.underline,
         ),
         textFieldStyle: TextStyle(
-          color: Colors.orange,
-          shadows: [Shadow(color: Colors.black, blurRadius: 2)],
+          color: Colors.black,
+          shadows: [Shadow(color: Colors.red, blurRadius: 2)],
         ),
         buttonStyle: TextStyle(
           fontWeight: FontWeight.w800,
           color: Colors.black,
         ),
         cardTheme: CardTheme(
-          color: Colors.blueGrey,
+          color: Colors.grey.shade700,
           elevation: 5,
           margin: EdgeInsets.only(top: 30),
           shape: ContinuousRectangleBorder(
@@ -64,7 +69,7 @@ class LoginScreen extends StatelessWidget {
           fillColor: Colors.purple.withOpacity(.1),
           contentPadding: EdgeInsets.zero,
           errorStyle: TextStyle(
-            backgroundColor: Colors.orange,
+            backgroundColor: Colors.red.shade700,
             color: Colors.white,
           ),
           labelStyle: TextStyle(fontSize: 12),
@@ -73,7 +78,7 @@ class LoginScreen extends StatelessWidget {
             //borderRadius: inputBorder,
           ),
           focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.red, width: 5),
+            borderSide: BorderSide(color: Colors.green, width: 5),
             // borderRadius: inputBorder,
           ),
           errorBorder: UnderlineInputBorder(
