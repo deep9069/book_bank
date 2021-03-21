@@ -50,8 +50,8 @@ class LoginScreen extends StatelessWidget {
           decoration: TextDecoration.underline,
         ),
         textFieldStyle: TextStyle(
-          color: Colors.black,
-          shadows: [Shadow(color: Colors.red, blurRadius: 2)],
+          color: Colors.white,
+          shadows: [Shadow(color: Colors.white, blurRadius: 0)],
         ),
         buttonStyle: TextStyle(
           fontWeight: FontWeight.w800,
@@ -96,8 +96,8 @@ class LoginScreen extends StatelessWidget {
         ),
         buttonTheme: LoginButtonTheme(
           splashColor: Colors.black,
-          backgroundColor: Colors.redAccent,
-          highlightColor: Colors.black,
+          backgroundColor: Colors.teal.shade700,
+          highlightColor: Colors.teal,
           elevation: 9.0,
           highlightElevation: 6.0,
           shape: BeveledRectangleBorder(
