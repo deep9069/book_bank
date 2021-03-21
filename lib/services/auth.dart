@@ -20,7 +20,7 @@ class Auth {
   }
 
   //function to sign in
-  Future signIn(String email, String password) async {
+  Future<String> signIn(String email, String password) async {
     print("Email : " + email);
     print("password : " + password);
     try {
@@ -35,7 +35,7 @@ class Auth {
   }
 
   //function to sign-out
-  Future signOut() async {
+  Future<String> signOut() async {
     await _auth.signOut();
     print("successfully signed-out");
   }

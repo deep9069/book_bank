@@ -63,6 +63,13 @@ flutter:
     - assets/LetUsC.png
     - assets/python.png
     - assets/coders at work.png
+    - assets/logo.png
+
+module:
+  androidX: true
+  androidPackage: com.example.book_bank
+  iosBundleIdentifier: com.example.book_bank
+
 
 
 

@@ -1,9 +1,6 @@
-import 'package:flutter_app/main.dart';
 
-import 'lib.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'login.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.brown,
       ),
       home: MyHomePage(),
     );
@@ -27,7 +24,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool showProgress = false;
+  bool showProgress = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

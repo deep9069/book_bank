@@ -167,7 +167,8 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform('com.google.firebase:firebase-bom:26.6.0')
+    implementation platform('com.google.firebase:firebase-bom:26.7.0')
     implementation "androidx.multidex:multidex:2.0.1"
     implementation 'com.google.firebase:firebase-analytics'
+    
 }

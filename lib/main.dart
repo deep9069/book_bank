@@ -12,7 +12,7 @@ String userUid = "no user";
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(Myapp());
 }
 
 /*class SearchBarDemoApp extends StatelessWidget {
@@ -31,7 +31,7 @@ Future<void> main() async {
     //),
   }
 }*/
-class MyApp extends DrawerExample {
+class Myapp extends DrawerExample {
   @override
   /*DrawerExample createState() => DrawerExample();
   Widget build(BuildContext context) {
