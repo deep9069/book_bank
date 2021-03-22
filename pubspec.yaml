@@ -65,6 +65,14 @@ flutter:
     - assets/coders at work.png
     - assets/logo.png
 
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/launcher/icon.png"
+  image_path_android: "assets/launcher/icon.png"
+  adaptive_icon_background: "assets/launcher/background.jpg"
+  adaptive_icon_foreground: "assets/launcher/foreground.png"
+
 module:
   androidX: true
   androidPackage: com.example.book_bank

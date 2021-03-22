@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlutterLogin(
       title: 'BOOK BANk',
-      logo: 'assets/logo.png',
+      logo: 'assets/foreground.png',
       onLogin: (data) {
         return Auth().signIn(data.name, data.password);
         Navigator.of(context).pushReplacement(MaterialPageRoute(
