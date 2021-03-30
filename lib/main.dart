@@ -1,5 +1,4 @@
 import 'package:flutter_app/services/auth.dart';
-
 import 'lib.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -7,15 +6,19 @@ import 'package:firebase_core/firebase_core.dart';
 import 'login_screen.dart';
 import 'login_screen.dart';
 import 'package:flutter_login/flutter_login.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
+//import 'dart:convert';
+import 'Product.dart';
+import 'FirebaseData.dart';
 String userUid = "no user";
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(Myapp());
 }
-
-/*class SearchBarDemoApp extends StatelessWidget {
+/*
+class SearchBarDemoApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -31,6 +34,25 @@ Future<void> main() async {
     //),
   }
 }*/
+/*class Product {
+  final String name;
+  final String description;
+  final int price;
+  final String image;
+  Product(this.name, this.description, this.price, this.image);
+  static List<Product> getProducts() {
+    List<Product> items = <Product>[];
+    items.add(Product("C++", "book for learning basic C++ programing language", 00, "c++.png"));
+    items.add(Product("PYTHON", "book for learning basic python programing language",00, "python.png"));
+    items.add(Product("CODERS AT WORK", "book for learning basic C++ programing language", 00, "coders at work.png"));
+    items.add(Product("JAVA", "book for learning basic java programing language", 00, "java.png"));
+    items.add(Product("LET US C", "book for learning basic C programing language", 00, "LetUsC.png"));
+    items.add(Product("JAVA 8", "book for learning basic to advance java 8 programing language", 00, "java 8.png"));
+    return items;
+  }
+}
+}*/
+//void main() => runApp(MyApp());
 class Myapp extends DrawerExample {
   @override
   /*DrawerExample createState() => DrawerExample();
@@ -42,10 +64,10 @@ class Myapp extends DrawerExample {
     return MaterialApp(
       title: 'Login Demo',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.deepOrange,
         accentColor: Colors.orange,
         // ignore: deprecated_member_use
-        cursorColor: Colors.orange,
+        cursorColor: Colors.black,
         textTheme: TextTheme(
           headline3: TextStyle(
             fontFamily: 'OpenSans',
@@ -55,8 +77,8 @@ class Myapp extends DrawerExample {
           button: TextStyle(
             fontFamily: 'OpenSans',
           ),
-          subtitle1: TextStyle(fontFamily: 'NotoSans'),
-          bodyText2: TextStyle(fontFamily: 'NotoSans'),
+          subtitle1: TextStyle(fontFamily: 'NatoSans'),
+          bodyText2: TextStyle(fontFamily: 'NatoSans'),
         ),
       ),
       home: LoginScreen(),
@@ -77,7 +99,7 @@ class DrawerExample extends StatelessWidget {
             style: TextStyle(fontSize: 18, color: Colors.black),
           ),
           elevation: 10,
-          backgroundColor: Colors.deepOrangeAccent,
+          backgroundColor: Colors.deepOrange,
           actions: [
             /*Padding(
             padding: EdgeInsets.all(8.0),
@@ -148,9 +170,7 @@ class DrawerExample extends StatelessWidget {
                   // Then close the drawer
                   Navigator.pop(context);
                   Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => new FirstPage()));
+                      context, new MaterialPageRoute(builder: (context) => new Profile()));
                 },
               ),
               new ListTile(
@@ -338,7 +358,7 @@ class _SearchListState extends State<SearchList> {
               this.appBarTitle = new TextField(
                 controller: _searchQuery,
                 style: new TextStyle(
-                  color: Colors.white,
+                  color: Colors.deepOrangeAccent,
                 ),
                 decoration: new InputDecoration(
                     prefixIcon: new Icon(Icons.search, color: Colors.white),
@@ -373,7 +393,7 @@ class _SearchListState extends State<SearchList> {
       );
       this.appBarTitle = new Text(
         "Search Sample",
-        style: new TextStyle(color: Colors.white),
+        style: new TextStyle(color: Colors.deepOrangeAccent),
       );
       _sSearching = false;
       _searchQuery.clear();
@@ -500,7 +520,164 @@ class contact_us extends StatelessWidget {
   }
 }
 
-class FirstPage extends StatelessWidget {
+/*class MyHomePage extends StatelessWidget {
+  final String title;
+  final Future<List<Product>> products;
+  MyHomePage({Key key, this.title, this.products}) : super(key: key);
+  // final items = Product.getProducts();
+  @override
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text("Product Navigation")),
+        body: Center(
+          child: StreamBuilder<QuerySnapshot>(
+            stream: products,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) print(snapshot.error);
+              if(snapshot.hasData) {
+                List<DocumentSnapshot> documents = snapshot.data.documents;
+                List<Product> items = List<Product>();
+                for(var i = 0; i < documents.length; i++) {
+                  DocumentSnapshot document = documents[i];
+                  items.add(Product.fromMap(document.data));
+                }
+                return ProductBoxList(items: items);
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+        ));
+  }
+
+}
+class ProductPage extends StatelessWidget {
+  ProductPage({Key key, this.item}) : super(key: key);
+  final Product item;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(this.item.name),
+      ),
+      body: Center(
+        child: Container(
+          padding: EdgeInsets.all(0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Image.asset("assets/" + this.item.image),
+                Expanded(
+                    child: Container(
+                        padding: EdgeInsets.all(5),
+                        child: Column(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Text(this.item.name,
+                                style: TextStyle(fontWeight:
+                                FontWeight.bold)),
+                            Text(this.item.description),
+                            Text("Price: " +
+                                this.item.price.toString()),
+                            RatingBox(),
+                          ],
+                        )))
+              ]),
+        ),
+      ),
+    );
+  }
+}
+class RatingBox extends StatefulWidget {
+  @override
+  _RatingBoxState createState() => _RatingBoxState();
+}
+class _RatingBoxState extends State<RatingBox> {
+  int _rating = 0;
+  void _setRatingAsOne() {
+    setState(() {
+      _rating = 1;
+    });
+  }
+  void _setRatingAsTwo() {
+    setState(() {
+      _rating = 2;
+    });
+  }
+  void _setRatingAsThree() {
+    setState(() {
+      _rating = 3;
+    });
+  }
+  Widget build(BuildContext context) {
+    double _size = 20;
+    print(_rating);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(0),
+          child: IconButton(
+            icon: (_rating >= 1
+                ? Icon(
+              Icons.star,
+              size: _size,
+            )
+                : Icon(
+              Icons.star_border,
+              size: _size,
+            )),
+            color: Colors.red[500],
+            onPressed: _setRatingAsOne,
+            iconSize: _size,
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(0),
+          child: IconButton(
+            icon: (_rating >= 2
+                ? Icon(
+              Icons.star,
+              size: _size,
+            )
+                : Icon(
+              Icons.star_border,
+              size: _size,
+            )),
+            color: Colors.red[500],
+            onPressed: _setRatingAsTwo,
+            iconSize: _size,
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(0),
+          child: IconButton(
+            icon: (_rating >= 3
+                ? Icon(
+              Icons.star,
+              size: _size,
+            )
+                : Icon(
+              Icons.star_border,
+              size: _size,
+            )),
+            color: Colors.red[500],
+            onPressed: _setRatingAsThree,
+            iconSize: _size,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+ */
+/*class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -544,7 +721,7 @@ class FirstPage extends StatelessWidget {
               image: "python.png"),
           ProductBox(
               name: "coding",
-              description: "book for learning the basic to advance coding",
+              description: book for learning basic C++ programing language,
               price: 20,
               image: "coders at work.png"),
         ],
@@ -552,117 +729,43 @@ class FirstPage extends StatelessWidget {
     );
   }
 }
-/*
-
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-
-    return new Scaffold(
-
-
-        appBar: new AppBar(title:new Text("BOOKSTACK")),
-       // body:text("deep"),
-
-
-           drawer: new Drawer(
-
-         // Add a ListView to the drawer. This ensures the user can scroll
-         // through the options in the drawer if there isn't enough vertical
-         // space to fit everything.
-          child: new ListView(
-         // Important: Remove any padding from the ListView.
-           padding: EdgeInsets.zero,
-           children: <Widget>[
-             new DrawerHeader(
-                child: new Text('MENU'),
-               decoration: new BoxDecoration(
-               color: Colors.greenAccent,
-               ),
-                ),
-             new ListTile(
-              title:new Text('HOME'),
-               onTap: () {
-                 // Update the state of the app
-                 // ...
-                 // Then close the drawer
-              Navigator.pop(context);
-              Navigator.push(context,
-                  new MaterialPageRoute(builder: (context) => new MyHomePage()));},),
-             new ListTile(
-              title: new Text("CART"),
-               onTap: () {
-                 Navigator.push(context,
-                     new MaterialPageRoute(
-                         builder: (ctxt) => new MyHomePage()));
-               },
-             ),
-
-
-
-
-
-
-             ListTile(
-                 title: Text('BOOKS'),
-               onTap: () {
-              // Update the state of the app
-              // ...
-               // Then close the drawer
-               Navigator.pop(context);
-               Navigator.push(context,
-                   new MaterialPageRoute(builder: (context) => new FirstPage()));
-    },
-    ),
-             ListTile(
-                   title: Text('PROFILE'),
-                  onTap: () {
-              // Update the state of the app
-              // ...
-               // Then close the drawer
-                    // Navigator.pop(context);
-    },
-        ),
-             ListTile(
-                  title: Text('SETTING'),
-               onTap: () {
-               // Update the state of the app
-               // ...
-               // Then close the drawer
-               Navigator.pop(context);
-    },
-        ),
-             ListTile(
-               title: Text('HELP & FEEDBACK'),
-               onTap: () {
-                 // Update the state of the app
-                 // ...
-                 // Then close the drawer
-                 Navigator.pop(context);
-               },
-             ),
-             ListTile(
-               title: Text('CONTACT US'),
-               onTap: () {
-                 // Update the state of the app
-                 // ...
-                 // Then close the drawer
-                 Navigator.pop(context);
-               },
-             ),
-    ],
-    ),
-        ),
-
-
-    );
-    }
-    }
 */
 
+
+/*
 class ProductBox extends StatelessWidget {
+  ProductBox({Key key, this.item}) : super(key: key);
+  final Product item;
+  Widget build(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.all(2),
+        height: 140,
+        child: Card(
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Image.asset("assets/" + this.item.image),
+                Expanded(
+                    child: Container(
+                        padding: EdgeInsets.all(5),
+                        child: Column(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Text(this.item.name,
+                                style: TextStyle(fontWeight:
+                                FontWeight.bold)),
+                            Text(this.item.description),
+                            Text("Price: " + this.item.price.toString()),
+                            RatingBox(),
+                          ],
+                        )))
+              ]),
+        ));
+  }
+}
+*/
+/*class ProductBox extends StatelessWidget {
   ProductBox({Key key, this.name, this.description, this.price, this.image})
       : super(key: key);
   final String name;
@@ -695,3 +798,4 @@ class ProductBox extends StatelessWidget {
             ])));
   }
 }
+*/
