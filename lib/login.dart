@@ -1,9 +1,6 @@
-import 'package:flutter_app/main.dart';
 
-import 'lib.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'login.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.brown,
       ),
       home: MyHomePage(),
     );
@@ -27,7 +24,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool showProgress = false;
+  bool showProgress = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: ModalProgressHUD(
-          inAsyncCall:showProgress ,
+          inAsyncCall: showProgress,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -86,7 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 45.0,
                   child: Text(
                     "Register",
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0),
+                    style:
+                        TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0),
                   ),
                 ),
               )

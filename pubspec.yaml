@@ -30,12 +30,23 @@ dependencies:
   firebase_auth: ^1.0.1
   cloud_firestore: ^1.0.1
   flutter_search_bar: ^2.1.0
-  english_words: ^3.1.5
-  provider: ^4.0.2
+  english_words: ^4.0.0
+  provider: ^5.0.0
   flutter_login: ^1.0.14
-
-
   shared_preferences: ^2.0.4
+  modal_progress_hud: ^0.1.3
+  http: ^0.13.0
+  flutter_full_pdf_viewer: ^1.0.6
+  file_picker: ^3.0.1
+  firebase_storage: ^8.0.1
+  #dio: ^3.0.9
+  #path_provider: ^1.6.5
+  #downloads_path_provider_28: ^0.1.0
+  #permission_handler: ^4.4.0+hotfix.2
+  #open_file: ^3.0.1
+  #flutter_local_notifications: ^1.3.0
+  #firebase_storage: ^3.0.8
+  #scoped_model: ^1.0.1
   #dio: 1.0.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -43,12 +54,21 @@ dependencies:
   # cloud_firestore: ^0.13.0+1
   #firebase_auth: ^0.15.3+1
   #firebase_core: ^0.4.3+2
-  modal_progress_hud: ^0.1.3
-  http: ^0.13.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.9.0
+  gradient_widgets: ^0.6.0
+flutter_icons:
+    ios: true
+    android: true
+    image_path_ios: "assets/launcher/icon11.png"
+    image_path_android: "assets/launcher/icon11.png"
+    adaptive_icon_background: "assets/launcher/background1.png"
+    adaptive_icon_foreground: "assets/launcher/icon11.png"
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -63,6 +83,16 @@ flutter:
     - assets/LetUsC.png
     - assets/python.png
     - assets/coders at work.png
+    - assets/foreground.png
+    - assets/logo.png
+
+
+
+module:
+  androidX: true
+  androidPackage: com.example.book_bank
+  iosBundleIdentifier: com.example.book_bank
+
 
 
 
