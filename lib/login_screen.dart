@@ -3,7 +3,7 @@ import 'package:flutter_app/main.dart';
 import 'package:flutter_app/homePage/homepage.dart';
 import 'package:flutter_app/services/auth.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
+
 const users = const {
   'dribbble@gmail.com': '12345',
   'hunter@gmail.com': 'hunter',
@@ -78,7 +78,8 @@ class LoginScreen extends StatelessWidget {
             //borderRadius: inputBorder,
           ),
           focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.greenAccent.shade400, width: 5),
+            borderSide:
+                BorderSide(color: Colors.greenAccent.shade400, width: 5),
             // borderRadius: inputBorder,
           ),
           errorBorder: UnderlineInputBorder(

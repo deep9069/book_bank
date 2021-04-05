@@ -35,7 +35,7 @@ class Auth {
   }
 
   //function to sign-out
-  Future<String> signOut() async {
+  Future<void> signOut() async {
     await _auth.signOut();
     print("successfully signed-out");
   }
