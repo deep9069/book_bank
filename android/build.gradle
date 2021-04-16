@@ -32,3 +32,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
+configurations {
+    compile.exclude group: 'com.google.zxing'
+}

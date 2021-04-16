@@ -1,32 +1,101 @@
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'download.dart';
+import 'router.dart' as router;
+import 'package:flutter_app/services/auth.dart';
+//import 'lib.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/test.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'login_screen.dart';
+import 'login_screen.dart';
+import 'package:flutter_login/flutter_login.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
+import 'Product.dart';
+import 'productDetails.dart';
+import 'load_pdf.dart';
+import 'homeSlider.dart';
+import 'mobile_pdf.dart';
+import 'screen_args.dart';
 
-var userUid;
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(new MaterialApp(home: Test()));
-}
+/*void main() => runApp(new MyApp());
 
-/*class SearchBarDemoApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
-      theme: new ThemeData(primarySwatch: Colors.blue),
-        //home: new SearchBarDemoHome()
-
-          home: MyHomePage(title: 'Product layout demo home page'),
-
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Widgets',
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      onGenerateRoute: router.generateRoute,
+      initialRoute: '/',
     );
-    //  home: MyHomePage(title: 'Product layout demo home page'),
-    //),
   }
 }*/
-class MyApp extends DrawerExample {
+String userUid = "no user";
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await FlutterDownloader.initialize(
+      debug: true // optional: set false to disable printing logs to console
+  );
+  runApp(Myapp());
+}
+
+class Myapp extends DrawerExample {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Login Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.deepOrange,
+        accentColor: Colors.orange,
+        // ignore: deprecated_member_use
+        cursorColor: Colors.black,
+        textTheme: TextTheme(
+          headline3: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 45.0,
+            color: Colors.orange,
+          ),
+          button: TextStyle(
+            fontFamily: 'OpenSans',
+          ),
+          subtitle1: TextStyle(fontFamily: 'NatoSans'),
+          bodyText2: TextStyle(fontFamily: 'NatoSans'),
+        ),
+      ),
+      home: DrawerExample(),
+    );
+  }
+}
+class callrouter extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Widgets',
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      onGenerateRoute: router.generateRoute,
+      initialRoute: '/',
+    );
+  }
+}
+/*
+String userUid = "no user";
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(Myapp());
+}
+
+//void main() => runApp(MyApp());
+class Myapp extends DrawerExample {
   @override
   /*DrawerExample createState() => DrawerExample();
   Widget build(BuildContext context) {
@@ -37,10 +106,10 @@ class MyApp extends DrawerExample {
     return MaterialApp(
       title: 'Login Demo',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.deepOrange,
         accentColor: Colors.orange,
         // ignore: deprecated_member_use
-        cursorColor: Colors.orange,
+        cursorColor: Colors.black,
         textTheme: TextTheme(
           headline3: TextStyle(
             fontFamily: 'OpenSans',
@@ -50,15 +119,15 @@ class MyApp extends DrawerExample {
           button: TextStyle(
             fontFamily: 'OpenSans',
           ),
-          subtitle1: TextStyle(fontFamily: 'NotoSans'),
-          bodyText2: TextStyle(fontFamily: 'NotoSans'),
+          subtitle1: TextStyle(fontFamily: 'NatoSans'),
+          bodyText2: TextStyle(fontFamily: 'NatoSans'),
         ),
       ),
       home: LoginScreen(),
     );
   }
 }
-
+*/
 class DrawerExample extends StatelessWidget {
   DrawerExample({Key key, this.title}) : super(key: key);
   final String title;
@@ -72,7 +141,7 @@ class DrawerExample extends StatelessWidget {
             style: TextStyle(fontSize: 18, color: Colors.black),
           ),
           elevation: 10,
-          backgroundColor: Colors.deepOrangeAccent,
+          backgroundColor: Colors.deepOrange,
           actions: [
             /*Padding(
             padding: EdgeInsets.all(8.0),
@@ -120,7 +189,7 @@ class DrawerExample extends StatelessWidget {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new DrawerExample()));
+                          builder: (context) => new MyApp2()));
                 },
               ),
               new ListTile(
@@ -142,10 +211,9 @@ class DrawerExample extends StatelessWidget {
                   // ...
                   // Then close the drawer
                   Navigator.pop(context);
+                  var screenArgs;
                   Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => new FirstPage()));
+                      context, new MaterialPageRoute(builder: (context) => new DW()));
                 },
               ),
               new ListTile(
@@ -158,7 +226,7 @@ class DrawerExample extends StatelessWidget {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new Profile()));
+                          builder: (context) => new Doom()));
                   // Then close the drawer
                   // Navigator.pop(context);
                 },
@@ -188,7 +256,7 @@ class DrawerExample extends StatelessWidget {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new HelpFeedback()));
+                          builder: (context) => new Help_Feedback()));
                 },
               ),
               new ListTile(
@@ -202,7 +270,7 @@ class DrawerExample extends StatelessWidget {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new ContactUs()));
+                          builder: (context) => new callrouter()));
                 },
               ),
             ],
@@ -333,7 +401,7 @@ class _SearchListState extends State<SearchList> {
               this.appBarTitle = new TextField(
                 controller: _searchQuery,
                 style: new TextStyle(
-                  color: Colors.white,
+                  color: Colors.deepOrangeAccent,
                 ),
                 decoration: new InputDecoration(
                     prefixIcon: new Icon(Icons.search, color: Colors.white),
@@ -368,7 +436,7 @@ class _SearchListState extends State<SearchList> {
       );
       this.appBarTitle = new Text(
         "Search Sample",
-        style: new TextStyle(color: Colors.white),
+        style: new TextStyle(color: Colors.deepOrangeAccent),
       );
       _sSearching = false;
       _searchQuery.clear();
@@ -464,7 +532,7 @@ class Setting extends StatelessWidget {
   }
 }
 
-class HelpFeedback extends StatelessWidget {
+class Help_Feedback extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -480,7 +548,7 @@ class HelpFeedback extends StatelessWidget {
   }
 }
 
-class ContactUs extends StatelessWidget {
+class contact_us extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -495,198 +563,3 @@ class ContactUs extends StatelessWidget {
   }
 }
 
-class FirstPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => DrawerExample()))),
-        title: Text("all books"),
-        centerTitle: true,
-      ),
-      body: new ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.fromLTRB(2.0, 10.0, 2.0, 10.0),
-        children: <Widget>[
-          ProductBox(
-              name: "C++",
-              description: "book for learning basic C++ programing language",
-              price: 1000,
-              image: "c++.png"),
-          ProductBox(
-              name: "java",
-              description: "book for learning basic java programing language",
-              price: 800,
-              image: "java.png"),
-          ProductBox(
-              name: "java 8",
-              description:
-                  "book for learning basic to advance java 8 programing language",
-              price: 2000,
-              image: "java 8.png"),
-          ProductBox(
-              name: "let us c",
-              description: "book for learning basic c programing language",
-              price: 1500,
-              image: "LetUsC.png"),
-          ProductBox(
-              name: "python",
-              description: "book for learning basic python programing language",
-              price: 100,
-              image: "python.png"),
-          ProductBox(
-              name: "coding",
-              description: "book for learning the basic to advance coding",
-              price: 20,
-              image: "coders at work.png"),
-        ],
-      ),
-    );
-  }
-}
-/*
-
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-
-    return new Scaffold(
-
-
-        appBar: new AppBar(title:new Text("BOOKSTACK")),
-       // body:text("deep"),
-
-
-           drawer: new Drawer(
-
-         // Add a ListView to the drawer. This ensures the user can scroll
-         // through the options in the drawer if there isn't enough vertical
-         // space to fit everything.
-          child: new ListView(
-         // Important: Remove any padding from the ListView.
-           padding: EdgeInsets.zero,
-           children: <Widget>[
-             new DrawerHeader(
-                child: new Text('MENU'),
-               decoration: new BoxDecoration(
-               color: Colors.greenAccent,
-               ),
-                ),
-             new ListTile(
-              title:new Text('HOME'),
-               onTap: () {
-                 // Update the state of the app
-                 // ...
-                 // Then close the drawer
-              Navigator.pop(context);
-              Navigator.push(context,
-                  new MaterialPageRoute(builder: (context) => new MyHomePage()));},),
-             new ListTile(
-              title: new Text("CART"),
-               onTap: () {
-                 Navigator.push(context,
-                     new MaterialPageRoute(
-                         builder: (ctxt) => new MyHomePage()));
-               },
-             ),
-
-
-
-
-
-
-             ListTile(
-                 title: Text('BOOKS'),
-               onTap: () {
-              // Update the state of the app
-              // ...
-               // Then close the drawer
-               Navigator.pop(context);
-               Navigator.push(context,
-                   new MaterialPageRoute(builder: (context) => new FirstPage()));
-    },
-    ),
-             ListTile(
-                   title: Text('PROFILE'),
-                  onTap: () {
-              // Update the state of the app
-              // ...
-               // Then close the drawer
-                    // Navigator.pop(context);
-    },
-        ),
-             ListTile(
-                  title: Text('SETTING'),
-               onTap: () {
-               // Update the state of the app
-               // ...
-               // Then close the drawer
-               Navigator.pop(context);
-    },
-        ),
-             ListTile(
-               title: Text('HELP & FEEDBACK'),
-               onTap: () {
-                 // Update the state of the app
-                 // ...
-                 // Then close the drawer
-                 Navigator.pop(context);
-               },
-             ),
-             ListTile(
-               title: Text('CONTACT US'),
-               onTap: () {
-                 // Update the state of the app
-                 // ...
-                 // Then close the drawer
-                 Navigator.pop(context);
-               },
-             ),
-    ],
-    ),
-        ),
-
-
-    );
-    }
-    }
-*/
-
-class ProductBox extends StatelessWidget {
-  ProductBox({Key key, this.name, this.description, this.price, this.image})
-      : super(key: key);
-  final String name;
-  final String description;
-  final int price;
-  final String image;
-  Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.all(2),
-        height: 120,
-        child: Card(
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-              Image.asset("assets/" + image),
-              Expanded(
-                  child: Container(
-                      padding: EdgeInsets.all(5),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Text(this.name,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red)),
-                          Text(this.description),
-                          Text("Price: ₹ " + this.price.toString()),
-                        ],
-                      )))
-            ])));
-  }
-}
