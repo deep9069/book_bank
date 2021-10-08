@@ -59,6 +59,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  splashscreen:
 
 
 
@@ -67,6 +68,9 @@ dev_dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.9.0
   gradient_widgets: ^0.6.0
+  pdftron_flutter:
+    git:
+      url: git://github.com/PDFTron/pdftron-flutter.git
 flutter_icons:
     ios: true
     android: true
@@ -84,6 +88,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/c++.png
+    - assets/deep.jpg
     - assets/java.png
     - assets/java 8.png
     - assets/LetUsC.png
@@ -94,7 +99,7 @@ flutter:
     - assets/SamsC++.png
     - assets/TeachJava.png
     - assets/LearningPython.png
-
+    - assets/splashscreen.jpg
 
 
 module:

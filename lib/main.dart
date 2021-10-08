@@ -1,3 +1,4 @@
+import 'package:flutter_app/CardCarousel.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'download.dart';
@@ -18,7 +19,9 @@ import 'load_pdf.dart';
 import 'homeSlider.dart';
 import 'mobile_pdf.dart';
 import 'screen_args.dart';
-
+import 'PDF_opner.dart';
+import 'package:splashscreen/splashscreen.dart';
+import 'dart:async';
 /*void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
@@ -42,10 +45,24 @@ void main() async {
   await FlutterDownloader.initialize(
       debug: true // optional: set false to disable printing logs to console
   );
-  runApp(Myapp());
+  runApp(MyAppSplashScreen());
 }
 
-class Myapp extends DrawerExample {
+class MyAppSplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Splash Screen',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: MyappD(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class MyappD extends DrawerExample {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -68,7 +85,8 @@ class Myapp extends DrawerExample {
           bodyText2: TextStyle(fontFamily: 'NatoSans'),
         ),
       ),
-      home: DrawerExample(),
+      home: LoginScreen(),
+        debugShowCheckedModeBanner: false
     );
   }
 }
@@ -136,33 +154,31 @@ class DrawerExample extends StatelessWidget {
     return new MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text(
-            "Home",
-            style: TextStyle(fontSize: 18, color: Colors.black),
-          ),
+          title: Text("Home", style: TextStyle(fontSize: 18, color: Colors.black),),
           elevation: 10,
           backgroundColor: Colors.deepOrange,
           actions: [
-            /*Padding(
+            Padding(
             padding: EdgeInsets.all(8.0),
 
             child: Icon(Icons.search,),
 
-          ),*/
-            /*
-          Padding(
+          ),
+
+          /*Padding(
             padding: EdgeInsets.all(8.0),
             child: Icon(Icons.notifications),
-          ),
-          */
+          ),*/
 
-            /*  Padding(
+
+         Padding(
             padding: EdgeInsets.all(8.0),
             child: Icon(Icons.more_vert),
-          ),*/
+          ),
             // ignore: deprecated_member_use
           ],
         ),
+
         drawer: Drawer(
           // Add a ListView to the drawer. This ensures the user can scroll
           // through the options in the drawer if there isn't enough vertical
@@ -172,8 +188,8 @@ class DrawerExample extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountName: Text("deepak"),
-                accountEmail: Text("test@gmail.com"),
+                accountName: Text("Deepak Kumar"),
+                accountEmail: Text("deep7982129926@gmail.com"),
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: AssetImage("assets/python.png"),
                 ),
@@ -189,7 +205,7 @@ class DrawerExample extends StatelessWidget {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new MyApp2()));
+                          builder: (context) => new DrawerExample()));
                 },
               ),
               new ListTile(
@@ -211,7 +227,7 @@ class DrawerExample extends StatelessWidget {
                   // ...
                   // Then close the drawer
                   Navigator.pop(context);
-                  var screenArgs;
+                 // var screenArgs;
                   Navigator.push(
                       context, new MaterialPageRoute(builder: (context) => new DW()));
                 },
@@ -226,7 +242,7 @@ class DrawerExample extends StatelessWidget {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new Doom()));
+                          builder: (context) => new Profile()));
                   // Then close the drawer
                   // Navigator.pop(context);
                 },
@@ -256,7 +272,7 @@ class DrawerExample extends StatelessWidget {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new Help_Feedback()));
+                          builder: (context) => new contact_us()));
                 },
               ),
               new ListTile(
@@ -270,25 +286,28 @@ class DrawerExample extends StatelessWidget {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new callrouter()));
+                          builder: (context) => new contact_us()));
                 },
               ),
             ],
           ),
         ),
-        /*body: Center(
-        child: ElevatedButton(
-          child: Text(''),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SecondPage()),
-            );
-          },
-        ),
-      ),*/
+        body: MyAppCard()
+        // body: Center(
+        // child: ElevatedButton(
+        //   child: Text(''),
+        //   onPressed: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => SecondPage()),
+        //     );
+        //   },
+        // ),
+      //),
       ),
+        debugShowCheckedModeBanner: false
     );
+
   }
 }
 
@@ -504,11 +523,17 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      body: Center(
+        child: Text('SORRY THIS IS UNDER DEVELOPMENT', style: TextStyle(
+            color: Colors.green[800],
+            fontWeight: FontWeight.bold,
+            fontSize: 25)),
+      ),
       appBar: new AppBar(
         leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => DrawerExample()))),
+            /*onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => DrawerExample()))*/),
         title: Text("profile"),
         centerTitle: true,
       ),
@@ -520,11 +545,17 @@ class Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      body: Center(
+        child: Text('SORRY THIS IS UNDER DEVELOPMENT', style: TextStyle(
+            color: Colors.green[800],
+            fontWeight: FontWeight.bold,
+            fontSize: 25)),
+      ),
       appBar: new AppBar(
         leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => DrawerExample()))),
+           /* onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => MyAppPDF()))*/),
         title: Text("settings"),
         centerTitle: true,
       ),
@@ -536,11 +567,18 @@ class Help_Feedback extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      body: Center(
+        child: Text('please let us know where are we behind. Please mention if any changes required and what should change or features should be added. Please feel free to write us and email us at deep7982129926@gmail.com\n\nWe will listen to you and try our best to provide the best service possible.',
+            style: TextStyle(
+                color: Colors.green[800],
+                fontWeight: FontWeight.bold,
+                fontSize: 25)),
+      ),
       appBar: new AppBar(
-        leading: IconButton(
+        /*leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => DrawerExample()))),
+                MaterialPageRoute(builder: (context) => MyAppCard()))),*/
         title: Text("help & feedback"),
         centerTitle: true,
       ),
@@ -552,12 +590,19 @@ class contact_us extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+        body: Center(
+        child: Text('THIS IS UNDER DEVELOPMENT', style: TextStyle(
+            color: Colors.green[800],
+            fontWeight: FontWeight.bold,
+            fontSize: 25)),
+        ),
         appBar: new AppBar(
-      leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.push(context,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+             onPressed: () => Navigator.push(context,
               MaterialPageRoute(builder: (context) => DrawerExample()))),
-      title: Text("contact us"),
+         title: Text("contact us"),
+
       centerTitle: true,
     ));
   }

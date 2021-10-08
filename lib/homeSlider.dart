@@ -47,7 +47,7 @@ Swiper imageSlider(context){
     },
     itemCount: 1,
     viewportFraction: 0.8,
-    scale: 0.9,
+    scale: 1.0,
   );
 
 }

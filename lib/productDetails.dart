@@ -5,6 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'main.dart';
+
+import 'dart:async';
+
+import 'package:flutter/services.dart';
+import 'package:pdftron_flutter/pdftron_flutter.dart';
 
 //this is a test widget
 void main() async {
@@ -38,7 +44,11 @@ class Test extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Books")),
+        appBar: AppBar( leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => DrawerExample()))),
+            title: Text("Books Available")),
         body: Center(
              child:StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance.collection('product').snapshots(),
@@ -96,7 +106,7 @@ class Test extends StatelessWidget {
   // = new Uri.http('dog.ceo', '/api/breeds/image/random');
 
     Image.network(imglink,width: 200,
-         fit: BoxFit.cover,),
+      fit: BoxFit.fill,),
 
         Expanded(
 
@@ -150,13 +160,12 @@ class Test extends StatelessWidget {
   mainAxisAlignment: MainAxisAlignment.center,
   crossAxisAlignment: CrossAxisAlignment.center,
   children: <Widget>[
-    Image.network(imglink,width: 200, fit: BoxFit.cover,),
+    Image.network(imglink,width: 200, fit: BoxFit.fill,),
     Expanded(
         child: Container(
             padding: EdgeInsets.all(5),
             child: Column(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Text(this.name,
                     style: TextStyle(fontWeight:
@@ -171,7 +180,7 @@ class Test extends StatelessWidget {
   // // ignore: deprecated_member_use
    // ignore: deprecated_member_use
    FlatButton(
-   child: Text('Save to memory'),
+   child: Text('Save in PHONE'),
    color: Theme.of(context).primaryColor,
    textColor: Colors.white,
    onPressed: () {
@@ -199,6 +208,23 @@ class Test extends StatelessWidget {
      }else{print("permission denied");
      }},*/
    }),
+    // ignore: deprecated_member_use
+    FlatButton(
+    child: Text('OPEN'),
+    color: Theme.of(context).primaryColor,
+    textColor: Colors.white,
+    onPressed: () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+          builder: (context) =>
+      MyAppPDF(name: name,
+          //description: description,
+          //price: price,
+          //image: image,
+          link: link,)));
+    })
+
   ]),
   ));
   }
@@ -285,7 +311,7 @@ class _MyHomePageState extends State<ThirdPage> {
 
             // ignore: deprecated_member_use
             FlatButton(
-              child: Text("Start Downloading"),
+              child: Text("DOWNLOAD"),
               color: Colors.redAccent,
               textColor: Colors.white,
               onPressed: () async {
@@ -296,7 +322,7 @@ class _MyHomePageState extends State<ThirdPage> {
 
                   final id = await FlutterDownloader.enqueue(url: link,
                     savedDir: externalDir.path,
-                    fileName: name,
+                    fileName: name + ".pdf",
                     showNotification: true,
                     openFileFromNotification: true,
                   );
@@ -308,6 +334,72 @@ class _MyHomePageState extends State<ThirdPage> {
               },
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+
+///for loading pdf in app
+
+class MyAppPDF extends StatefulWidget {
+  MyAppPDF({@required this.name, this.link});
+
+  final name;
+  final link;
+  @override
+  _MyAppState createState() => _MyAppState(name:name,link:link);
+}
+
+class _MyAppState extends State<MyAppPDF> {
+  _MyAppState({@required this.name, this.link});
+
+  final name;
+  final link;
+  String _version = 'Unknown';
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+
+    PdftronFlutter.openDocument(link);
+  }
+
+  // Platform messages are asynchronous, so we initialize via an async method.
+  Future<void> initPlatformState() async {
+    String version;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      //PdftronFlutter.initialize('free');
+      version = await PdftronFlutter.version;
+    } on PlatformException {
+      version = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _version = version;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('PDFTron Document Opener'),
+        ),
+        body: Center(
+          child: Text(
+              'PDFtron ' ,
+              //'Running on: $_version\n'
+          ),
         ),
       ),
     );
